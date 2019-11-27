@@ -21,9 +21,18 @@ const router = express.Router();
 const dbRoute = 'mongodb://127.0.0.1:27017/AppData';
 
 // connects our back end code with the database
-mongoose.connect(dbRoute, { useNewUrlParser: true, useUnifiedTopology: true });
-
+mongoose.connect(dbRoute, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true, 
+  useCreateIndex: true, 
+  useFindAndModify: false 
+});
 let db = mongoose.connection;
+
+// // connects our back end code with the database
+// mongoose.connect(dbRoute, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// let db = mongoose.connection;
 
 db.once('open', () => console.log('connected to the database'));
 
