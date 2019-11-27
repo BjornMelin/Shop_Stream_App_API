@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const { Customer } = require('./Schemas/customer');
 const { Job } = require('./Schemas/job');
+const { Shift } = require('./Schemas/shift');
 
 
 
@@ -80,6 +81,25 @@ router.post('/postJobData', async (req, res) => {
     amountPerUnit,
   });
   const result = newJob.save();
+  res.send(result);
+});
+
+
+router.post('/postShiftData', async (req, res) => {
+  // console.log(req);
+  console.log(req.body);
+  const {
+    jobNum, buttonToButtonTime, partsSampled, 
+    orderDate, shiftNotes,
+  } = req.body;
+  let newShift = new Shift({
+    jobNum,
+    buttonToButtonTime,
+    partsSampled,
+    orderDate,
+    shiftNotes,
+  });
+  const result = newShift.save();
   res.send(result);
 });
 
