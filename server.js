@@ -8,6 +8,7 @@ const { Job } = require('./Schemas/job');
 const { Shift } = require('./Schemas/shift');
 const { PartSetup } = require('./Schemas/partSetup');
 const { InvMaterial } = require('./Schemas/invMaterial');
+const { Inspection } = require('./Schemas/inspection');
 
 
 
@@ -153,6 +154,31 @@ router.post('/postInvMaterialData', async (req, res) => {
     mmeNotes,
   });
   const result = newInvMaterial.save();
+  res.send(result);
+});
+
+
+
+
+router.post('/postInspectData', async (req, res) => {
+  // console.log(req);
+  console.log(req.body);
+  const {
+    inspectDate, inspectDueDate, inspectDesc, jobNum,
+    quantToShip, checkedQualGood, checkedQualOkay,
+    checkedQualPoor,
+  } = req.body;
+  let newInspection = new Inspection({
+    inspectDate,
+    inspectDueDate,
+    inspectDesc,
+    jobNum,
+    quantToShip,
+    checkedQualGood,
+    checkedQualOkay,
+    checkedQualPoor,
+  });
+  const result = newInspection.save();
   res.send(result);
 });
 
