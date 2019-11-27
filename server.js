@@ -6,6 +6,7 @@ const logger = require('morgan');
 const { Customer } = require('./Schemas/customer');
 const { Job } = require('./Schemas/job');
 const { Shift } = require('./Schemas/shift');
+const { PartSetup } = require('./Schemas/partSetup');
 
 
 
@@ -100,6 +101,28 @@ router.post('/postShiftData', async (req, res) => {
     shiftNotes,
   });
   const result = newShift.save();
+  res.send(result);
+});
+
+
+router.post('/postPartSetupData', async (req, res) => {
+  // console.log(req);
+  console.log(req.body);
+  const {
+    buttonToButtonTime, partDesc, machineTime, toolNotes,
+    viceNotes, Scrap, scrapQuant, scrapTypes,
+  } = req.body;
+  let newPartSetup = new PartSetup({
+    buttonToButtonTime,
+    partDesc,
+    machineTime,
+    toolNotes,
+    viceNotes,
+    Scrap,
+    scrapQuant,
+    scrapTypes,
+  });
+  const result = newPartSetup.save();
   res.send(result);
 });
 
