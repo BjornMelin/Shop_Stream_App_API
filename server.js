@@ -3,7 +3,10 @@ const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const { Customer } = require('./customer');
+const { Customer } = require('./Schemas/customer');
+const { Job } = require('./Schemas/job');
+
+
 
 const API_PORT = 4000;
 const app = express();
@@ -32,7 +35,7 @@ app.use(logger('dev'));
 
 
 
-router.post('/putCustData', async (req, res) => {
+router.post('/postCustData', async (req, res) => {
   // console.log(req);
   console.log(req.body);
   const {
@@ -46,6 +49,37 @@ router.post('/putCustData', async (req, res) => {
     phoneNum,
   });
   const result = newCust.save();
+  res.send(result);
+});
+
+
+
+router.post('/postJobData', async (req, res) => {
+  // console.log(req);
+  console.log(req.body);
+  const {
+    orderDate, dueDate, poNum, jobNum, partNum,
+    orderQuant, recievedQuant, remainingQuant,
+    cycleTime, runHours, runDays, amountTotal,
+    amountPerHour, amountPerUnit,
+  } = req.body;
+  let newJob = new Job({
+    orderDate, 
+    dueDate, 
+    poNum, 
+    jobNum, 
+    partNum,
+    orderQuant, 
+    recievedQuant, 
+    remainingQuant,
+    cycleTime, 
+    runHours, 
+    runDays, 
+    amountTotal,
+    amountPerHour, 
+    amountPerUnit,
+  });
+  const result = newJob.save();
   res.send(result);
 });
 
