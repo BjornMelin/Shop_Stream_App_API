@@ -7,6 +7,7 @@ const { Customer } = require('./Schemas/customer');
 const { Job } = require('./Schemas/job');
 const { Shift } = require('./Schemas/shift');
 const { PartSetup } = require('./Schemas/partSetup');
+const { InvMaterial } = require('./Schemas/invMaterial');
 
 
 
@@ -123,6 +124,35 @@ router.post('/postPartSetupData', async (req, res) => {
     scrapTypes,
   });
   const result = newPartSetup.save();
+  res.send(result);
+});
+
+
+router.post('/postInvMaterialData', async (req, res) => {
+  // console.log(req);
+  console.log(req.body);
+  const {
+    materialName, materialType, checkedMaterial, checkedTool,
+    matQuantity, amtPerItem, itemLenFeet, itemLenInch,
+    itemWidthFeet, itemWidthInch, itemHtFeet, itemHtInch,
+    mmeNotes,
+  } = req.body;
+  let newInvMaterial = new InvMaterial({
+    materialName,
+    materialType,
+    checkedMaterial,
+    checkedTool,
+    matQuantity,
+    amtPerItem,
+    itemLenFeet,
+    itemLenInch,
+    itemWidthFeet,
+    itemWidthInch,
+    itemHtFeet,
+    itemHtInch,
+    mmeNotes,
+  });
+  const result = newInvMaterial.save();
   res.send(result);
 });
 
