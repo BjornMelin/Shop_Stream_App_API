@@ -191,6 +191,12 @@ router.post('/postInspectData', async (req, res) => {
   res.send(result);
 });
 
+router.get('/getData', async (req, res) => {
+  console.log(req.body);
+  const customers = await Customer.find(); // finds all in the db
+  res.send(customers);
+});
+
 
 
 // append /api for our http requests
