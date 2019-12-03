@@ -196,7 +196,19 @@ router.get('/getData', async (req, res) => {
   const customers = await Customer.find({}); // finds all in the db
   console.log(customers);
   res.send(customers);
+  // res.send(JSON.parse(JSON.stringify(customers)));
 });
+
+
+  // router.get('/getData', function (req, res) {
+  //   console.log(req.body);
+  //     Customer.find({}), function(err, customers) {
+  //       if(err) throw err;
+
+  //       console.log("Customers: " + customers.length);
+  //       res.send(customers);
+  //     }
+  // });
 
 
 
