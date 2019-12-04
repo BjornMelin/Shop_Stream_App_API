@@ -47,6 +47,9 @@ app.use(logger('dev'));
 
 
 
+///////////////////////////////////////////////////////////////////
+////////////////////  POST Functions   ////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 router.post('/postCustData', async (req, res) => {
   // console.log(req);
@@ -191,24 +194,69 @@ router.post('/postInspectData', async (req, res) => {
   res.send(result);
 });
 
-router.get('/getData', async (req, res) => {
+
+
+
+///////////////////////////////////////////////////////////////////
+////////////////////  GET Functions   /////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+router.get('/getCustomers', async (req, res) => {
   console.log(req.body);
   const customers = await Customer.find({}); // finds all in the db
   console.log(customers);
   res.send(customers);
-  // res.send(JSON.parse(JSON.stringify(customers)));
 });
 
 
-  // router.get('/getData', function (req, res) {
-  //   console.log(req.body);
-  //     Customer.find({}), function(err, customers) {
-  //       if(err) throw err;
+router.get('/getInventory', async (req, res) => {
+  console.log(req.body);
+  const inventory = await InvMaterial.find({}); // finds all in the db
+  console.log(inventory);
+  res.send(inventory);
+});
 
-  //       console.log("Customers: " + customers.length);
-  //       res.send(customers);
-  //     }
-  // });
+
+router.get('/getInspections', async (req, res) => {
+  console.log(req.body);
+  const inspections = await Inspection.find({}); // finds all in the db
+  console.log(inspections);
+  res.send(inspections);
+});
+
+
+router.get('/getJobs', async (req, res) => {
+  console.log(req.body);
+  const jobs = await Job.find({}); // finds all in the db
+  console.log(jobs);
+  res.send(jobs);
+});
+
+
+router.get('/getPartSetups', async (req, res) => {
+  console.log(req.body);
+  const partSetups = await PartSetup.find({}); // finds all in the db
+  console.log(partSetups);
+  res.send(partSetups);
+});
+
+
+
+router.get('/getShifts', async (req, res) => {
+  console.log(req.body);
+  const shifts = await Shift.find({}); // finds all in the db
+  console.log(shifts);
+  res.send(shifts);
+});
+
+
+
+
+
+///////////////////////////////////////////////////////////////////
+////////////////////  UPDATE Functions   //////////////////////////
+///////////////////////////////////////////////////////////////////
 
 
 
