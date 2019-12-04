@@ -260,6 +260,22 @@ router.get('/getShifts', async (req, res) => {
 
 
 
+
+
+///////////////////////////////////////////////////////////////////
+////////////////////  DELETE Functions   //////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+router.get('/deleteCustomer', async (req, res) => {
+  console.log(req.body);
+  Customer.findByIdAndDelete({_id: req.params.id}, function(err, business){
+    if(err) res.json(err);
+    else res.json('Successfully removed'); // finds all in the db
+});
+
+
+
 // append /api for our http requests
 app.use('/api', router);
 
