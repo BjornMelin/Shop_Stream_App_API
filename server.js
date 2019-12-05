@@ -203,42 +203,83 @@ router.post('/postInspectData', async (req, res) => {
 
 
 router.get('/getCustomers', async (req, res) => {
-  console.log(req.body);
-  const customers = await Customer.find({}); // finds all in the db
+  var customers = await Customer.find({}); // finds all in the db
   console.log(customers);
-  res.send(customers);
+  if (customers == null) return res.json({
+    success: false,
+    customers: customers.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: customers.length,
+    customers: customers
+  })
 });
 
 
+
 router.get('/getInventory', async (req, res) => {
-  console.log(req.body);
   const inventory = await InvMaterial.find({}); // finds all in the db
   console.log(inventory);
-  res.send(inventory);
+  if (inventory == null) return res.json({
+    success: false,
+    inventory: inventory.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: inventory.length,
+    inventory: inventory
+  })
 });
 
 
 router.get('/getInspections', async (req, res) => {
-  console.log(req.body);
   const inspections = await Inspection.find({}); // finds all in the db
   console.log(inspections);
-  res.send(inspections);
+  if (inspections == null) return res.json({
+    success: false,
+    inspections: inspections.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: inspections.length,
+    inspections: inspections
+  })
 });
 
 
 router.get('/getJobs', async (req, res) => {
-  console.log(req.body);
   const jobs = await Job.find({}); // finds all in the db
   console.log(jobs);
-  res.send(jobs);
+  if (jobs == null) return res.json({
+    success: false,
+    jobs: jobs.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: jobs.length,
+    jobs: jobs
+  })
 });
 
 
 router.get('/getPartSetups', async (req, res) => {
-  console.log(req.body);
   const partSetups = await PartSetup.find({}); // finds all in the db
   console.log(partSetups);
-  res.send(partSetups);
+  if (partSetups == null) return res.json({
+    success: false,
+    partSetups: partSetups.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: partSetups.length,
+    partSetups: partSetups
+  })
 });
 
 
@@ -247,7 +288,16 @@ router.get('/getShifts', async (req, res) => {
   console.log(req.body);
   const shifts = await Shift.find({}); // finds all in the db
   console.log(shifts);
-  res.send(shifts);
+  if (shifts == null) return res.json({
+    success: false,
+    shifts: shifts.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: shifts.length,
+    shifts: shifts
+  })
 });
 
 
