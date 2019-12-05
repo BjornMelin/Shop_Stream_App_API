@@ -61,6 +61,9 @@ const JobSchema = new Schema({
     type: String,
     // required: true
   },
+  mmeNotes: {
+    type: String,
+  }
 })
 
 // export the new Schema so we could modify it using Node.js

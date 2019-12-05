@@ -77,7 +77,7 @@ router.post('/postJobData', async (req, res) => {
     orderDate, dueDate, poNum, jobNum, partNum,
     orderQuant, recievedQuant, remainingQuant,
     cycleTime, runHours, runDays, amountTotal,
-    amountPerHour, amountPerUnit,
+    amountPerHour, amountPerUnit, mmeNotes,
   } = req.body;
   let newJob = new Job({
     orderDate, 
@@ -94,6 +94,7 @@ router.post('/postJobData', async (req, res) => {
     amountTotal,
     amountPerHour, 
     amountPerUnit,
+    mmeNotes,
   });
   const result = newJob.save();
   res.send(result);
