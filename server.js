@@ -273,6 +273,7 @@ router.get('/deleteCustomer', async (req, res) => {
     if(err) res.json(err);
     else res.json('Successfully removed'); // finds all in the db
 });
+});
 
 
 
