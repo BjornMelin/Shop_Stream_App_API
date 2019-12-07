@@ -11,7 +11,6 @@ const { InvMaterial } = require('./Schemas/invMaterial');
 const { Inspection } = require('./Schemas/inspection');
 
 
-
 const API_PORT = 4000;
 const app = express();
 app.use(cors());
@@ -29,11 +28,7 @@ mongoose.connect(dbRoute, {
 });
 let db = mongoose.connection;
 
-// // connects our back end code with the database
-// mongoose.connect(dbRoute, { useNewUrlParser: true, useUnifiedTopology: true });
-
-// let db = mongoose.connection;
-
+// Once DB connection has been made, outputs message to console
 db.once('open', () => console.log('connected to the database'));
 
 // checks if connection with the database is successful
@@ -47,8 +42,11 @@ app.use(logger('dev'));
 
 
 
+
+
+
 ///////////////////////////////////////////////////////////////////
-////////////////////  POST Functions   ////////////////////////////
+////////////////////  Customer Functions   ////////////////////////
 ///////////////////////////////////////////////////////////////////
 
 router.post('/postCustData', async (req, res) => {
@@ -69,6 +67,37 @@ router.post('/postCustData', async (req, res) => {
 });
 
 
+
+router.get('/getCustomers', async (req, res) => {
+  var customers = await Customer.find({}); // finds all in the db
+  console.log(customers);
+  if (customers == null) return res.json({
+    success: false,
+    customers: customers.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: customers.length,
+    customers: customers
+  })
+});
+
+
+router.get('/deleteCustomer', async (req, res) => {
+  console.log(req.body);
+  Customer.findByIdAndDelete({_id: req.params.id}, function(err, ){
+    if(err) res.json(err);
+    else res.json('Successfully removed'); // finds all in the db
+});
+});
+
+
+
+
+///////////////////////////////////////////////////////////////////
+////////////////////  Job Functions   /////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 router.post('/postJobData', async (req, res) => {
   // console.log(req);
@@ -101,6 +130,28 @@ router.post('/postJobData', async (req, res) => {
 });
 
 
+
+router.get('/getJobs', async (req, res) => {
+  const jobs = await Job.find({}); // finds all in the db
+  console.log(jobs);
+  if (jobs == null) return res.json({
+    success: false,
+    jobs: jobs.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: jobs.length,
+    jobs: jobs
+  })
+});
+
+
+
+///////////////////////////////////////////////////////////////////
+////////////////////  Shift Functions   ///////////////////////////
+///////////////////////////////////////////////////////////////////
+
 router.post('/postShiftData', async (req, res) => {
   // console.log(req);
   console.log(req.body);
@@ -119,6 +170,30 @@ router.post('/postShiftData', async (req, res) => {
   res.send(result);
 });
 
+
+
+router.get('/getShifts', async (req, res) => {
+  console.log(req.body);
+  const shifts = await Shift.find({}); // finds all in the db
+  console.log(shifts);
+  if (shifts == null) return res.json({
+    success: false,
+    shifts: shifts.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: shifts.length,
+    shifts: shifts
+  })
+});
+
+
+
+
+///////////////////////////////////////////////////////////////////
+////////////////////  Part Setup Functions   //////////////////////
+///////////////////////////////////////////////////////////////////
 
 router.post('/postPartSetupData', async (req, res) => {
   // console.log(req);
@@ -141,6 +216,27 @@ router.post('/postPartSetupData', async (req, res) => {
   res.send(result);
 });
 
+
+router.get('/getPartSetups', async (req, res) => {
+  const partSetups = await PartSetup.find({}); // finds all in the db
+  console.log(partSetups);
+  if (partSetups == null) return res.json({
+    success: false,
+    partSetups: partSetups.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: partSetups.length,
+    partSetups: partSetups
+  })
+});
+
+
+
+///////////////////////////////////////////////////////////////////
+////////////////////  Inventory Functions   ///////////////////////
+///////////////////////////////////////////////////////////////////
 
 router.post('/postInvMaterialData', async (req, res) => {
   // console.log(req);
@@ -171,7 +267,26 @@ router.post('/postInvMaterialData', async (req, res) => {
 });
 
 
+router.get('/getInventory', async (req, res) => {
+  const inventory = await InvMaterial.find({}); // finds all in the db
+  console.log(inventory);
+  if (inventory == null) return res.json({
+    success: false,
+    inventory: inventory.length,
+    error: err
+  })
+  return res.json({
+    success: true, 
+    amount: inventory.length,
+    inventory: inventory
+  })
+});
 
+
+
+///////////////////////////////////////////////////////////////////
+////////////////////  Inspection Functions   //////////////////////
+///////////////////////////////////////////////////////////////////
 
 router.post('/postInspectData', async (req, res) => {
   // console.log(req);
@@ -197,45 +312,6 @@ router.post('/postInspectData', async (req, res) => {
 
 
 
-
-///////////////////////////////////////////////////////////////////
-////////////////////  GET Functions   /////////////////////////////
-///////////////////////////////////////////////////////////////////
-
-
-router.get('/getCustomers', async (req, res) => {
-  var customers = await Customer.find({}); // finds all in the db
-  console.log(customers);
-  if (customers == null) return res.json({
-    success: false,
-    customers: customers.length,
-    error: err
-  })
-  return res.json({
-    success: true, 
-    amount: customers.length,
-    customers: customers
-  })
-});
-
-
-
-router.get('/getInventory', async (req, res) => {
-  const inventory = await InvMaterial.find({}); // finds all in the db
-  console.log(inventory);
-  if (inventory == null) return res.json({
-    success: false,
-    inventory: inventory.length,
-    error: err
-  })
-  return res.json({
-    success: true, 
-    amount: inventory.length,
-    inventory: inventory
-  })
-});
-
-
 router.get('/getInspections', async (req, res) => {
   const inspections = await Inspection.find({}); // finds all in the db
   console.log(inspections);
@@ -252,79 +328,7 @@ router.get('/getInspections', async (req, res) => {
 });
 
 
-router.get('/getJobs', async (req, res) => {
-  const jobs = await Job.find({}); // finds all in the db
-  console.log(jobs);
-  if (jobs == null) return res.json({
-    success: false,
-    jobs: jobs.length,
-    error: err
-  })
-  return res.json({
-    success: true, 
-    amount: jobs.length,
-    jobs: jobs
-  })
-});
 
-
-router.get('/getPartSetups', async (req, res) => {
-  const partSetups = await PartSetup.find({}); // finds all in the db
-  console.log(partSetups);
-  if (partSetups == null) return res.json({
-    success: false,
-    partSetups: partSetups.length,
-    error: err
-  })
-  return res.json({
-    success: true, 
-    amount: partSetups.length,
-    partSetups: partSetups
-  })
-});
-
-
-
-router.get('/getShifts', async (req, res) => {
-  console.log(req.body);
-  const shifts = await Shift.find({}); // finds all in the db
-  console.log(shifts);
-  if (shifts == null) return res.json({
-    success: false,
-    shifts: shifts.length,
-    error: err
-  })
-  return res.json({
-    success: true, 
-    amount: shifts.length,
-    shifts: shifts
-  })
-});
-
-
-
-
-
-///////////////////////////////////////////////////////////////////
-////////////////////  UPDATE Functions   //////////////////////////
-///////////////////////////////////////////////////////////////////
-
-
-
-
-
-///////////////////////////////////////////////////////////////////
-////////////////////  DELETE Functions   //////////////////////////
-///////////////////////////////////////////////////////////////////
-
-
-router.get('/deleteCustomer', async (req, res) => {
-  console.log(req.body);
-  Customer.findByIdAndDelete({_id: req.params.id}, function(err, business){
-    if(err) res.json(err);
-    else res.json('Successfully removed'); // finds all in the db
-});
-});
 
 
 
